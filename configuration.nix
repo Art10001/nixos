@@ -125,6 +125,7 @@
      temurin-bin-8
      redshift
      xcalib
+     parallel-full
    ];
 nixpkgs.config.allowUnfree = true;
 networking.nameservers = [ "94.140.14.14" ];
