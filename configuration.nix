@@ -126,6 +126,9 @@
      redshift
      xcalib
      parallel-full
+     usb-modeswitch
+     usb-modeswitch-data
+     pkgs.linuxKernel.packages.linux_xanmod_stable.rtl8852bu #new driver
    ];
 nixpkgs.config.allowUnfree = true;
 networking.nameservers = [ "94.140.14.14" ];
