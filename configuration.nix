@@ -129,6 +129,8 @@
      usb-modeswitch
      usb-modeswitch-data
      pkgs.linuxKernel.packages.linux_xanmod_stable.rtl8852bu #new driver
+     #rtw89-firmware #maybe?; wasn't needed
+     alsa-utils
    ];
 nixpkgs.config.allowUnfree = true;
 networking.nameservers = [ "94.140.14.14" ];
@@ -137,20 +139,22 @@ xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 services.flatpak.enable = true;
 services.picom.enable = false;
 boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
+boot.kernelModules = [ "8852bu" ];
+boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8852bu ]; #new driver installed
 environment.sessionVariables.NIXOS_OZONE_WL = "1";
 ##Nvidia
 hardware.opengl.enable = true;
   # Load nvidia driver for Xorg and Wayland
 services.xserver.videoDrivers = ["nvidia"]; #no more nvidia with xanmod; now trying manual update
 
-hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-  version = "555.58.02";
-  sha256_64bit = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
-  sha256_aarch64 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
-  openSha256 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
-  settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
-  persistencedSha256 = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
-};
+#hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+#  version = "555.58.02";
+#  sha256_64bit = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+#  sha256_aarch64 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
+#  openSha256 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
+#  settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+#  persistencedSha256 = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+#}; # no longer necessary after 24.11
 hardware.nvidia.modesetting.enable = true;
 hardware.nvidia.nvidiaSettings = true;
 hardware.nvidia.forceFullCompositionPipeline = true;
