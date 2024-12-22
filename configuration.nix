@@ -131,6 +131,7 @@
      pkgs.linuxKernel.packages.linux_xanmod_stable.rtl8852bu #new driver
      #rtw89-firmware #maybe?; wasn't needed
      alsa-utils
+     fish
    ];
 nixpkgs.config.allowUnfree = true;
 networking.nameservers = [ "94.140.14.14" ];
