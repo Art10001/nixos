@@ -134,11 +134,22 @@
      fish
    ];
 nixpkgs.config.allowUnfree = true;
+hardware.opengl.driSupport32Bit = true;
+services.libinput.mouse.additionalOptions = ''
+ Option "libinput pointer detect spurious"
+ MatchIsPointer "on"
+ MatchDevicePath "/dev/input/event*"
+ Driver "libinput"
+ Option "IgnoreButtonThreshhold" "on"
+ Option "IgnoreButtonThreshold" "on"
+'';
+
 networking.nameservers = [ "94.140.14.14" ];
 xdg.portal.enable = true;
 xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 services.flatpak.enable = true;
 services.picom.enable = false;
+virtualisation.vmware.host.enable = true;
 boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 boot.kernelModules = [ "8852bu" ];
 boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8852bu ]; #new driver installed
